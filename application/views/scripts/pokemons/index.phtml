@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Titre de ma page</title>
+</head>
+<body>
+    <h1>Pokemons</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Picture</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+        <?php foreach ($this->pokemons as $key => $pokemon): ?>
+        <tr>
+            <td>
+                <a href="<?php echo $this->baseUrl('/pokemons/show/id/' . $pokemon->id) ?>">
+                    <?php echo $pokemon->name ?>
+                </a>
+            </td>
+            <td>
+                <?php echo '<img src="' . $pokemon->picture . '" />' ?>
+            </td>
+
+            <td>
+                <?php echo $pokemon->description ?>
+            </td>
+            <td>
+                <a href="<?php echo $this->baseUrl('/pokemons/edit/id/' . $pokemon->id) ?>">Edit</a>
+                <a href="<?php echo $this->baseUrl('/pokemons/del/id/' . $pokemon->id) ?>">Delete</a>
+            </td>
+        </tr>
+        <?php endforeach ?>
+    </table>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Titre de ma page</title>
+</head>
+
+
+<?php if ($this->pokemon): ?>
+    <h1><?php echo $pokemon->name ?></h1>
+    <article>
+        <img src="<?php echo $pokemon->picture ?>"/>
+        <p>
+            <?php echo $pokemon->description ?>
+        </p>
+    </article>
+
+<?php else: ?>
+<?php echo $this->message ?>
+<?php endif ?>
+
+<h1>Really ? This Pokemon ?</h1>
+<?php if ($this->message): ?>
+<?php echo $this->message ?>
+<?php endif ?>
+<?php echo $this->form ?>
+</body>
+</html>
