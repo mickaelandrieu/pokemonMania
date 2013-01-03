@@ -7,22 +7,19 @@
 
 
 <?php if ($this->pokemon): ?>
-    <h1><?php echo $pokemon->name ?></h1>
+    <h1><?php echo $this->pokemon->name ?></h1>
     <article>
-        <img src="<?php echo $pokemon->picture ?>"/>
+        <img src="<?php echo $this->pokemon->picture ?>"/>
         <p>
-            <?php echo $pokemon->description ?>
+            <?php echo $this->pokemon->description ?>
         </p>
     </article>
 
 <?php else: ?>
-<?php echo $this->message ?>
+    <h1>Really ? This Pokemon ?</h1>
+    <?php if ($this->message): ?>
+    <?php echo $this->message ?>
+    <?php endif ?>
 <?php endif ?>
-
-<h1>Really ? This Pokemon ?</h1>
-<?php if ($this->message): ?>
-<?php echo $this->message ?>
-<?php endif ?>
-<?php echo $this->form ?>
-</body>
-</html>
+    </body>
+    </html>
