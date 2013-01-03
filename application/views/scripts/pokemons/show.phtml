@@ -2,24 +2,38 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Titre de ma page</title>
+    <title>Showing a Pokemon</title>
 </head>
+<section>
+    <header>
+        <h1>Pokemon Mania : A Zend Framework Project about Pokemons of course</h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="<?php echo $this->baseUrl('/') ?>">Start Page</a>
+                    <a href="<?php echo $this->baseUrl('/pokemons/') ?>">Pokemons</a>
+                    <a href="<?php echo $this->baseUrl('/pokemons/') ?>">Contact Us !</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        <?php if ($this->pokemon): ?>
+        <h2><?php echo $this->pokemon->name ?></h2>
+        <article>
+            <img src="<?php echo $this->pokemon->picture ?>"/>
+            <p>
+                <?php echo $this->pokemon->description ?>
+            </p>
+        </article>
 
-
-<?php if ($this->pokemon): ?>
-    <h1><?php echo $this->pokemon->name ?></h1>
-    <article>
-        <img src="<?php echo $this->pokemon->picture ?>"/>
-        <p>
-            <?php echo $this->pokemon->description ?>
-        </p>
-    </article>
-
-<?php else: ?>
-    <h1>Really ? This Pokemon ?</h1>
-    <?php if ($this->message): ?>
-    <?php echo $this->message ?>
-    <?php endif ?>
-<?php endif ?>
-    </body>
-    </html>
+        <?php else: ?>
+        <h1>Really ? This Pokemon ?</h1>
+        <?php if ($this->message): ?>
+            <?php echo $this->message ?>
+            <?php endif ?>
+        <?php endif ?>
+    </section>
+</section>
+</body>
+</html>

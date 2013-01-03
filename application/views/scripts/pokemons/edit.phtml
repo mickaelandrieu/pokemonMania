@@ -2,10 +2,22 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Titre de ma page</title>
+    <title>Evolving of a Pokemon</title>
 </head>
 <body>
     <section>
+        <header>
+            <h1>Pokemon Mania : A Zend Framework Project about Pokemons of course</h1>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="<?php echo $this->baseUrl('/') ?>">Start Page</a>
+                        <a href="<?php echo $this->baseUrl('/pokemons/') ?>">Pokemons</a>
+                        <a href="<?php echo $this->baseUrl('/pokemons/') ?>">Contact Us !</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
         <h1>Evolving of a Pokemon</h1>
         <?php if ($this->message): ?>
         <?php echo $this->message ?>

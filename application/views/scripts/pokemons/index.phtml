@@ -5,34 +5,51 @@
     <title>Titre de ma page</title>
 </head>
 <body>
-    <h1>Pokemons</h1>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Picture</th>
-            <th>Description</th>
-            <th></th>
-        </tr>
-        <?php foreach ($this->pokemons as $key => $pokemon): ?>
-        <tr>
-            <td>
-                <a href="<?php echo $this->baseUrl('/pokemons/show/id/' . $pokemon->id) ?>">
-                    <?php echo $pokemon->name ?>
-                </a>
-            </td>
-            <td>
-                <?php echo '<img src="' . $pokemon->picture . '" />' ?>
-            </td>
+<section>
+    <header>
+        <h1>Pokemon Mania : A Zend Framework Project about Pokemons of course</h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="<?php echo $this->baseUrl('/') ?>">Start Page</a>
+                    <a href="<?php echo $this->baseUrl('/pokemons/') ?>">Pokemons</a>
+                    <a href="<?php echo $this->baseUrl('/pokemons/') ?>">Contact Us !</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        <h2>Pokemons</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Picture</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+            <?php foreach ($this->pokemons as $key => $pokemon): ?>
+            <tr>
+                <td>
+                    <a href="<?php echo $this->baseUrl('/pokemons/show/id/' . $pokemon->id) ?>">
+                        <?php echo $pokemon->name ?>
+                    </a>
+                </td>
+                <td>
+                    <?php echo '<img src="' . $pokemon->picture . '" />' ?>
+                </td>
 
-            <td>
-                <?php echo $pokemon->description ?>
-            </td>
-            <td>
-                <a href="<?php echo $this->baseUrl('/pokemons/edit/id/' . $pokemon->id) ?>">Edit</a>
-                <a href="<?php echo $this->baseUrl('/pokemons/del/id/' . $pokemon->id) ?>">Delete</a>
-            </td>
-        </tr>
-        <?php endforeach ?>
-    </table>
+                <td>
+                    <?php echo $pokemon->description ?>
+                </td>
+                <td>
+                    <a href="<?php echo $this->baseUrl('/pokemons/edit/id/' . $pokemon->id) ?>">Edit</a>
+                    <a href="<?php echo $this->baseUrl('/pokemons/del/id/' . $pokemon->id) ?>">Delete</a>
+                </td>
+            </tr>
+            <?php endforeach ?>
+        </table>
+        <a href="<?php echo $this->baseUrl('/pokemons/add') ?>">Catch a new Pokemon !</a>
+    </section>
+</section>
 </body>
 </html>
