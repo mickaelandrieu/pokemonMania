@@ -2,6 +2,9 @@
 
 class Pokemons extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'pokemons';
+
+    protected $_name = 'Pokemons';
+
+
 }
 

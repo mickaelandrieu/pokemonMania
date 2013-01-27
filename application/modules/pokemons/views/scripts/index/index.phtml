@@ -13,7 +13,6 @@
         <nav>
             <ul>
                 <li>
-                    <a href="<?php echo $this->baseUrl('/') ?>">Start Page</a>
                     <a href="<?php echo $this->baseUrl('/pokemons/') ?>">Pokemons</a>
                     <a href="<?php echo $this->baseUrl('/pokemons/') ?>">Contact Us !</a>
                 </li>
@@ -44,13 +43,13 @@
                     <?php echo $pokemon->description ?>
                 </td>
                 <td>
-                    <a href="<?php echo $this->baseUrl('/pokemons/edit/id/' . $pokemon->id) ?>">Edit</a>
-                    <a href="<?php echo $this->baseUrl('/pokemons/del/id/' . $pokemon->id) ?>">Delete</a>
+                    <a href="<?php echo $this->baseUrl('/pokemons/index/edit/id/' . $pokemon->id) ?>">Edit</a>
+                    <a href="<?php echo $this->baseUrl('/pokemons/index/del/id/' . $pokemon->id) ?>">Delete</a>
                 </td>
             </tr>
             <?php endforeach ?>
         </table>
-        <a href="<?php echo $this->baseUrl('/pokemons/add') ?>">Catch a new Pokemon !</a>
+        <a href="<?php echo $this->baseUrl('/pokemons/index/add') ?>">Catch a new Pokemon !</a>
     </section>
 </section>
 <script type="javascript" src="<?php echo $this->baseUrl('js/jquery-1.7.1.min.js') ?>"></script>

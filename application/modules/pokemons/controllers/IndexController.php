@@ -1,18 +1,18 @@
 <?php
-/**
- * Mickaël Andrieu
- * Date: 25/12/12
- * Time: 22:47
- * Pokemons 'CRUD' Controller : allow Create, Modify and Delete a Pokemon
- */
-class PokemonsController extends Zend_Controller_Action
+
+class Pokemons_IndexController extends Zend_Controller_Action
 {
 
     public function init()
     {
-        $this->Pokemons = new Pokemons();
+        $this->pokemons = new Pokemons();
     }
 
+    public function indexAction()
+    {
+
+        $this->view->pokemons = $this->pokemons->fetchAll();
+    }
 
     public function addAction()
     {
@@ -33,17 +33,12 @@ class PokemonsController extends Zend_Controller_Action
         $this->view->form = $form;
     }
 
-    public function indexAction()
-    {
-        $this->view->pokemons = $this->Pokemons->fetchAll();
-    }
-
     public function showAction()
     {
         $id = $this->getRequest()->getParam('id');
         if ($id > 0)
         {
-            $pokemon = $this->Pokemons->find($id)->current();
+            $pokemon = $this->pokemons->find($id)->current();
             $this->view->pokemon = $pokemon;
         }
         else $this->view->message = 'This Pokemon was not discovered yet !';
@@ -59,13 +54,13 @@ class PokemonsController extends Zend_Controller_Action
                 if ($form->isValid($pokemonData))
                 {
                     $formData = $form->getValues();
-                    $this->Posts->update($formData, "id = $id");
+                    $this->pokemons->update($formData, "id = $id");
                     $this->_redirect('/pokemons/index');
                 }
                 else $form->populate($pokemonData);
             }
             else {
-                $pokemon = $this->Pokemons->find($id)->current();
+                $pokemon = $this->pokemons->find($id)->current();
                 $form->populate($pokemon->toArray());
                 $hidden = new Zend_Form_Element_Hidden('id');
                 $hidden->setValue($id);
@@ -75,6 +70,7 @@ class PokemonsController extends Zend_Controller_Action
         else $this->view->message = 'You tryin\' to edit an undiscovered Pokemon!' ;
         $this->view->form = $form;
     }
+
     public function delAction()
     {
         $id = $this->getRequest()->getParam('id');
@@ -99,7 +95,6 @@ class PokemonsController extends Zend_Controller_Action
         $picture->setLabel('Url de l\'image')
             ->setDescription('Insérez l\'url d\'accès à l\'image du Pokemon')
             ->setRequired(true);
-            //->addFilters(array('StringToLower', 'StringTrim'));
 
         $description = new Zend_Form_Element_Textarea('description');
         $description->setLabel('Description')
@@ -108,12 +103,13 @@ class PokemonsController extends Zend_Controller_Action
 
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Valider le formulaire')
-               ->setIgnore(true);
+            ->setIgnore(true);
 
         $form = new Zend_Form();
         $form->addElements(array($name, $picture, $description, $submit));
-        // ->setAction('') // you can set your action. We will let blank, to send the request to the same action
         return $form; // return the form
     }
+
+
 }
 
