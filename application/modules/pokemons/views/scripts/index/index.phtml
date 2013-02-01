@@ -31,7 +31,7 @@
             <?php foreach ($this->pokemons as $key => $pokemon): ?>
             <tr>
                 <td>
-                    <a href="<?php echo $this->baseUrl('/pokemons/show/id/' . $pokemon->id) ?>">
+                    <a href="<?php echo $this->baseUrl('/pokemons/index/show/id/' . $pokemon->id) ?>">
                         <?php echo $pokemon->name ?>
                     </a>
                 </td>
