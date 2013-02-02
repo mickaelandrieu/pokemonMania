@@ -113,6 +113,14 @@ class Pokemons_IndexController extends Zend_Controller_Action
     //créer un PDF avec tout les pokemons. Un pokemon par page.
     public function pdfAction()
     {
+        $pdf= $this->getPokemonsPdf();
+        $this->getResponse()->setHeader('Content-type', 'application/pdf', true);
+        $this->getResponse()->setBody($pdf->render());
+
+    }
+
+    public function getPokemonsPdf(){
+            
         //récupération de la liste les pokemons
         $this->view->pokemons = $this->pokemons->fetchAll();
 
@@ -139,10 +147,28 @@ class Pokemons_IndexController extends Zend_Controller_Action
            }               
                                  
         }
+        return $pdf;
 
-        $this->getResponse()->setHeader('Content-type', 'application/pdf', true);
-        $this->getResponse()->setBody($pdf->render());
+    }
+    public function mailAction()
+    {
+        $config = array('auth' => 'login',
+                'username' => 'pokezend@gmail.com',
+                'password' => 'pokezend123');
+ 
+        $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
+         
+        $mail = new Zend_Mail();
+        $mail->setBodyText('Voici ton pokedex !!!!! ');
+        $mail->setFrom('pokezend@gmail.com', 'Docteur chen');
+        $mail->addTo('jeremy.greaux@gmail.com', 'jeremy');
+        $mail->setSubject('Voici ton pokedex !!!!! ');
 
+        $at = $mail->createAttachment($this->getPokemonsPdf()->render());
+        $at->filename = "Pokedex.pdf";         
+        $mail->send($transport);
+
+        $this->_redirect('/pokemons/index');
     }
 
 
