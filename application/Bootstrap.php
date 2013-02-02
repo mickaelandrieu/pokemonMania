@@ -12,8 +12,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         $adapter = Zend_Db::factory('pdo_mysql', array(
             'host' => 'localhost',
-            'username' => 'amplurimedia',
-            'password' => 'A1nges6!',
+            'username' => 'root',
+            'password' => '',
             'dbname' => 'pokemonmania',
             'charset' => 'utf8'
         ));

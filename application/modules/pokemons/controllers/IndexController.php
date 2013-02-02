@@ -110,6 +110,41 @@ class Pokemons_IndexController extends Zend_Controller_Action
         return $form; // return the form
     }
 
+    //créer un PDF avec tout les pokemons. Un pokemon par page.
+    public function pdfAction()
+    {
+        //récupération de la liste les pokemons
+        $this->view->pokemons = $this->pokemons->fetchAll();
+
+        // Création d'un fichier pdf
+        $pdf = new Zend_Pdf();
+        $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
+
+        foreach ($this->view->pokemons as $pokemon) {
+            // Création d'une page
+            $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+
+            // Ajout du nom du pokemon
+            
+            $page->setFont($font, 36);
+            $page->drawText($pokemon->name, 72, 720, 'UTF-8');
+            $page->setFont($font, 12);
+            $page->drawText("Lien de l'image: ".$pokemon->picture, 72, 680, 'UTF-8');   
+            $descriptionLines = wordwrap($pokemon->description, 90, "--*--");  
+            $descriptionLines = explode("--*--", $descriptionLines); 
+            $y = 660;
+            foreach ($descriptionLines as $descriptionLine) {
+               $page->drawText($descriptionLine, 72, $y, 'UTF-8');
+               $y=$y-11;
+           }               
+                                 
+        }
+
+        $this->getResponse()->setHeader('Content-type', 'application/pdf', true);
+        $this->getResponse()->setBody($pdf->render());
+
+    }
+
 
 }
 
