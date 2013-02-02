@@ -23,7 +23,7 @@ class Pokemons_IndexController extends Zend_Controller_Action
             if($form->isValid($pokemonData))
             {
                 $formData = $form->getValues();
-                $this->Pokemons->insert($formData);
+                $this->pokemons->insert($formData);
             }
             else
             {
