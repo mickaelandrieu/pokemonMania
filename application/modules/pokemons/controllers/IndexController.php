@@ -113,12 +113,18 @@ class Pokemons_IndexController extends Zend_Controller_Action
     //créer un PDF avec tout les pokemons. Un pokemon par page.
     public function pdfAction()
     {
-        $pdf= $this->getPokemonsPdf();
+        $id = $this->getRequest()->getParam('id');
+        if ($id) {
+            $pdf= $this->getPokemonPdf($id);
+        }
+        else{
+            $pdf= $this->getPokemonsPdf();
+        }
         $this->getResponse()->setHeader('Content-type', 'application/pdf', true);
         $this->getResponse()->setBody($pdf->render());
-
     }
 
+    //Permet de générer un pdf pour le pokedex
     public function getPokemonsPdf(){
             
         //récupération de la liste les pokemons
@@ -150,8 +156,35 @@ class Pokemons_IndexController extends Zend_Controller_Action
         return $pdf;
 
     }
-    public function mailAction()
-    {
+
+    //Permet de générer un pdf d'un seul pokémon
+    public function getPokemonPdf($id){
+            
+        //récupération du pokemon
+        $pokemon = $this->pokemons->find($id)->current();
+
+        // Création d'un fichier pdf
+        $pdf = new Zend_Pdf();
+        $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
+        $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+
+        // Ajout infos sur le pokemon
+        $page->setFont($font, 36);
+        $page->drawText($pokemon->name, 72, 720, 'UTF-8');
+        $page->setFont($font, 12);
+        $page->drawText("Lien de l'image: ".$pokemon->picture, 72, 680, 'UTF-8');   
+        $descriptionLines = wordwrap($pokemon->description, 90, "--*--");  
+        $descriptionLines = explode("--*--", $descriptionLines); 
+        $y = 660;
+        foreach ($descriptionLines as $descriptionLine) {
+           $page->drawText($descriptionLine, 72, $y, 'UTF-8');
+           $y=$y-11;
+       }     
+        return $pdf;
+
+    }
+
+    public function mailAction(){
         $config = array('auth' => 'login',
                 'username' => 'pokezend@gmail.com',
                 'password' => 'pokezend123');
@@ -164,7 +197,16 @@ class Pokemons_IndexController extends Zend_Controller_Action
         $mail->addTo('jeremy.greaux@gmail.com', 'jeremy');
         $mail->setSubject('Voici ton pokedex !!!!! ');
 
-        $at = $mail->createAttachment($this->getPokemonsPdf()->render());
+        //Selection pokemon
+        $id = $this->getRequest()->getParam('id');
+        if ($id) {
+            $pdf= $this->getPokemonPdf($id);
+        }
+        else{
+            $pdf= $this->getPokemonsPdf();
+        }
+
+        $at = $mail->createAttachment($pdf->render());
         $at->filename = "Pokedex.pdf";         
         $mail->send($transport);
 

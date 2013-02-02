@@ -35,6 +35,9 @@
             <?php echo $this->message ?>
             <?php endif ?>
         <?php endif ?>
+
+        <a href="<?php echo $this->baseUrl('/pokemons/index/pdf/id/'.$this->pokemon->id) ?>" target="_blank">Export the pokedex !</a>
+        <a href="<?php echo $this->baseUrl('/pokemons/index/mail/id/'.$this->pokemon->id) ?>">Envoyer par mail mon pokedex</a>
     </section>
 </section>
 <script type="javascript" src="<?php echo $this->baseUrl('js/jquery-1.7.1.min.js') ?>"></script>
