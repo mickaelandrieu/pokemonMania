@@ -2,10 +2,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Showing a Pokemon</title>
+    <title>Evolving of a Pokemon</title>
     <link rel="stylesheet" href="<?php echo $this->baseUrl('css/bootstrap.min.css') ?>" type="text/css" >
     <link rel="stylesheet" href="<?php echo $this->baseUrl('css/bootstrap-responsive.min.css') ?>" type="text/css" >
 </head>
+<body>
 <section>
     <header>
         <h1>Pokemon Mania : A Zend Framework Project about Pokemons of course</h1>
@@ -18,26 +19,11 @@
             </ul>
         </nav>
     </header>
-    <section>
-        <?php if ($this->pokemon): ?>
-        <h2><?php echo $this->pokemon->name ?></h2>
-        <article>
-            <img src="<?php echo $this->pokemon->picture ?>"/>
-            <p>
-                <?php echo $this->pokemon->description ?>
-            </p>
-        </article>
-
-        <?php else: ?>
-        <h1>Really ? This Pokemon ?</h1>
-        <?php if ($this->message): ?>
-            <?php echo $this->message ?>
-            <?php endif ?>
-        <?php endif ?>
-
-        <a href="<?php echo $this->baseUrl('/pokemons/index/pdf/id/'.$this->pokemon->id) ?>" target="_blank">Export this pokemon !</a>
-        <a href="<?php echo $this->baseUrl('/pokemons/index/mail/id/'.$this->pokemon->id) ?>">Send by mail my pokemon</a>
-    </section>
+    <h1>Une envie de nous parler ?</h1>
+    <?php if ($this->message): ?>
+    <?php echo $this->message ?>
+    <?php endif ?>
+    <?php echo $this->form ?>
 </section>
 <script type="javascript" src="<?php echo $this->baseUrl('js/jquery-1.7.1.min.js') ?>"></script>
 <script type="javascript" src="<?php echo $this->baseUrl('js/bootstrap.min.js') ?>"></script>
