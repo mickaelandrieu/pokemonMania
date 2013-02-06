@@ -886,3 +886,15 @@
   'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
   'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
 </pre></pre>
+2013-02-06T23:35:25+00:00 DEBUG (7): <pre><pre class='xdebug-var-dump' dir='ltr'>
+<b>array</b>
+  'module' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'pokemons'</font> <i>(length=8)</i>
+  'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+  'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+</pre></pre>
+2013-02-06T23:35:31+00:00 DEBUG (7): <pre><pre class='xdebug-var-dump' dir='ltr'>
+<b>array</b>
+  'module' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'pokemons'</font> <i>(length=8)</i>
+  'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+  'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+</pre></pre>
