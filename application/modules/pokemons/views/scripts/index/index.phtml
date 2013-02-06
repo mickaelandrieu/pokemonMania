@@ -26,16 +26,16 @@
                 </li>
             </ul>
         </nav>
-          <FORM NAME="Choix">
-          <SELECT NAME="Liste" onChange="Lien()">
-          <OPTION VALUE="<?php echo $this->baseUrl('/pokemons/') ?>">
-          <OPTION VALUE="<?php echo $this->baseUrl('/pokemons/index/config/value/ini') ?>">Ini
-          <OPTION VALUE="<?php echo $this->baseUrl('/pokemons/index/config/value/php') ?>">Php
-          <OPTION VALUE="<?php echo $this->baseUrl('/pokemons/index/config/value/xml') ?>">Xml
-          <OPTION VALUE="<?php echo $this->baseUrl('/pokemons/index/config/value/json') ?>">Json
-          <OPTION VALUE="<?php echo $this->baseUrl('/pokemons/index/config/value/yaml') ?>">Yaml
-          </SELECT>
-          </FORM>
+          <form name="Choix">
+              <select name="Liste" onChange="Lien()">
+                  <option value="<?php echo $this->baseUrl('/pokemons/') ?>">&nbsp;</option>
+                  <option value="<?php echo $this->baseUrl('/pokemons/index/config/value/ini') ?>">Ini</option>
+                  <option value="<?php echo $this->baseUrl('/pokemons/index/config/value/php') ?>">Php</option>
+                  <option value="<?php echo $this->baseUrl('/pokemons/index/config/value/xml') ?>">Xml</option>
+                  <option value="<?php echo $this->baseUrl('/pokemons/index/config/value/json') ?>">Json</option>
+                  <option value="<?php echo $this->baseUrl('/pokemons/index/config/value/yaml') ?>">Yaml</option>
+              </select>
+          </form>
     </header>
     <section>
         <h2>Pokemons</h2>
