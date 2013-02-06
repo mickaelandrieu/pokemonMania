@@ -5,17 +5,61 @@ class Pokemons_IndexController extends Zend_Controller_Action
 
     public function init()
     {
-        $this->pokemons = new Pokemons();
+        $stream = @fopen(APPLICATION_PATH . '/configs/application.xml', 'a', false);
+        if (! $stream) {
+            $this::GenererConfig();
+        }
+        session_start();
+        $test = $this->getRequest()->getParam('value');
+        var_dump($_COOKIE['config'], $test);
+        if(empty($test)) {
+          if(empty($_COOKIE["config"])) {
+            $this::ConfigIni();
+          } else {
+            $this::ChangeConfig($_COOKIE["config"]);
+          }
+        } else {
+           $this::ChangeConfig($test);
+        }
+        if($_COOKIE["config"] != "php") {
+          $adapter = Zend_Db::factory($this->config->database->adapter, array(
+              'host' => $this->config->database->params->host,
+              'username' => $this->config->database->params->username,
+              'password' => $this->config->database->params->password,
+              'dbname' => $this->config->database->params->dbname,
+              'charset' => $this->config->database->params->charset
+          ));
+        } else {
+        $adapter = Zend_Db::factory($this->config->production->database->adapter, array(
+              'host' => $this->config->production->database->params->host,
+              'username' => $this->config->production->database->params->username,
+              'password' => $this->config->production->database->params->password,
+              'dbname' => $this->config->production->database->params->dbname,
+              'charset' => $this->config->production->database->params->charset
+          ));        
+        }
+        Zend_Db_Table_Abstract::setDefaultAdapter($adapter);                                                        
+        $this->pokemons = new Pokemons(); 
     }
 
     public function indexAction()
-    {
-
+    {   
+        $this->debug = $this::GetDebug();
+        if(!empty($_COOKIE)) {
+          if($_COOKIE['config'] == 'yaml') {
+            $this::AddFireFoxLog($this->debug);
+          }
+          if($_COOKIE['config'] == 'xml') {
+            $this::AddDBLog($this->debug);
+          }
+        }
+        $this::AddWriteLog($this->debug);
         $this->view->pokemons = $this->pokemons->fetchAll();
     }
 
     public function addAction()
     {
+        $this->debug = $this::GetDebug();
         $form = $this->getForm();
         if($this->getRequest()->isPost())
         {
@@ -35,6 +79,7 @@ class Pokemons_IndexController extends Zend_Controller_Action
 
     public function showAction()
     {
+        $this->debug = $this::GetDebug();
         $id = $this->getRequest()->getParam('id');
         if ($id > 0)
         {
@@ -43,8 +88,10 @@ class Pokemons_IndexController extends Zend_Controller_Action
         }
         else $this->view->message = 'This Pokemon was not discovered yet !';
     }
+    
     public function editAction()
     {
+        $this->debug = $this::GetDebug();
         $form = $this->getForm();
         $id = $this->getRequest()->getParam('id');
         if ($id > 0) {
@@ -80,6 +127,11 @@ class Pokemons_IndexController extends Zend_Controller_Action
             $pokemon->delete();
             $this->_redirect('/pokemons/index');
         }
+    }
+    
+    public function configAction()
+    {
+       $this->_redirect('/pokemons/index');
     }
 
     public function getForm()
@@ -203,7 +255,112 @@ class Pokemons_IndexController extends Zend_Controller_Action
         unlink($tmpName);
         return $pdf;
     }
+    
+    private function GetDebug() {
+        return Zend_Debug::dump($this->getRequest()->getParams());
+    }
+    
+    private function AddWriteLog($log) {   
+        $stream = @fopen('../application/logs/debug.log', 'a', false);
+        if (! $stream) {
+            throw new Exception('Failed to open stream');
+        }
+        
+        $writer = new Zend_Log_Writer_Stream($stream);
+        $logger = new Zend_Log($writer);
+         
+        $logger->debug($log);    
+    }
+    
+    private function AddDBLog($log) {
+        $params = array ($this->config->database->params->host,
+                         $this->config->database->params->username,
+                         $this->config->database->params->password,
+                         $this->config->database->params->dbname);
+        $db = Zend_Db::factory($this->config->database->params->adapter, $params);
+         
+        $columnMapping = array('lvl' => 'DEBUG', 'msg' => $log);
+        $writer = new Zend_Log_Writer_Db($db, 'zf_special_log', $columnMapping);
+         
+        $logger = new Zend_Log($writer);
+         
+        $logger->debug($log); 
+    }
 
-
+    private function AddFireFoxLog($log) {
+        // Place this in your bootstrap file before dispatching your front controller
+        $writer = new Zend_Log_Writer_Firebug();
+        $logger = new Zend_Log($writer);
+         
+        // Use this in your model, view and controller files
+        $logger->log($log, Zend_Log::DEBUG); 
+    }
+    
+    private function GenererConfig() {
+        $this->config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini');
+        
+        $writerPhp = new Zend_Config_Writer_Array();
+        $writerJson = new Zend_Config_Writer_Json();
+        $writerYaml = new Zend_Config_Writer_Yaml();
+        $writerXml = new Zend_Config_Writer_Xml();
+         
+        $writerXml->setConfig($this->config)
+        ->setFilename(APPLICATION_PATH . '/configs/application.xml')
+        ->write();
+        $writerPhp->setConfig($this->config)
+        ->setFilename(APPLICATION_PATH . '/configs/application.php')
+        ->write();
+        $writerJson->setConfig($this->config)
+        ->setFilename(APPLICATION_PATH . '/configs/application.json')
+        ->write();
+        $writerYaml->setConfig($this->config)
+        ->setFilename(APPLICATION_PATH . '/configs/application.Yaml')
+        ->write();     
+    }  
+    
+    private function ChangeConfig($value) {
+        switch($value) {
+          case "php" :
+            $config = "php";
+            $this::ConfigPhp();
+            break;            
+          case "xml" :
+            $config = "xml";
+            $this::ConfigXml();
+            break; 
+          case "json" :
+            $config = "json";
+            $this::ConfigJson();
+            break;   
+          case "yaml" :
+            $config = "yaml";
+            $this::ConfigYaml();
+            break; 
+          case "ini" :
+            $config = "ini";
+            $this::ConfigIni();
+            break;                    
+        }    
+        setcookie("config", $value, time()+3600);
+    }
+    
+    private function ConfigPhp() {
+        $this->config = new Zend_Config(require APPLICATION_PATH . '/configs/application.php');
+    }
+    
+    private function ConfigIni() {
+        $this->config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', 'production');
+    }
+    
+    private function ConfigXml() {
+      $this->config = new Zend_Config_Xml(APPLICATION_PATH . '/configs/application.xml', 'production');
+    }
+    
+    private function ConfigJson() {
+      $this->config = new Zend_Config_Json(APPLICATION_PATH . '/configs/application.json', 'production');
+    }
+    
+    private function ConfigYaml() {
+      $this->config = new Zend_Config_Yaml(APPLICATION_PATH . '/configs/application.yaml', 'production');       
+    }      
 }
-
