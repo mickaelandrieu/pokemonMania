@@ -154,20 +154,29 @@ class Pokemons_IndexController extends Zend_Controller_Action
         $mail = new Zend_Mail();
         $mail->setBodyText('Voici ton pokedex !!!!! ');
         $mail->setFrom('pokezend@gmail.com', 'Docteur chen');
-        $mail->addTo('andrieu.travail@gmail.com', 'jeremy');
+        $mail->addTo('jeremy.greaux@gmail.com', 'jeremy');
         $mail->setSubject('Voici ton pokedex !!!!! ');
 
         //Selection pokemon
         $id = $this->getRequest()->getParam('id');
         if ($id) {
+            $pokemon = $this->pokemons->find($id)->current();
             $pdf= $this->getPokemonPdf($id);
+            $xlsTbl = $this::exportPokemon($pokemon);
         }
         else{
+            $pokemons = $this->pokemons->fetchAll();
             $pdf= $this->getPokemonsPdf();
+            $xlsTbl = $this::exportPokemons($pokemons);
         }
 
         $at = $mail->createAttachment($pdf->render());
-        $at->filename = "Pokedex.pdf";         
+        $at->filename = "Pokedex.pdf";    
+
+        $atxls = $mail->createAttachment($xlsTbl);
+        $atxls->filename = "Pokedex.xls";    
+
+
         $mail->send($transport);
 
         $this->_redirect('/pokemons/index');
@@ -204,6 +213,47 @@ class Pokemons_IndexController extends Zend_Controller_Action
         return $pdf;
     }
 
+    public function csvAction() {
 
+        $id = $this->getRequest()->getParam('id');
+        $this->_helper->viewRenderer->setNoRender(true);        
+        if ($id) {
+            $pokemon = $this->pokemons->find($id)->current();
+            $xlsTbl = $this::exportPokemon($pokemon);
+        }
+        else{
+            $pokemons = $this->pokemons->fetchAll();
+            $xlsTbl = $this::exportPokemons($pokemons);
+        }
+        echo $xlsTbl;
+    }
+    
+    public function exportPokemon($pokemon) {
+        $xlsTbl = "<tr><th>Pokemon</th><th>lien image</th><th>description</th></tr>";
+        $xlsTbl .= "<tr>";
+        $xlsTbl .= "<td>" .utf8_decode($pokemon->name) . "</td>";
+        $xlsTbl .= "<td>" .utf8_decode($pokemon->picture) . "</td>";
+        $xlsTbl .= "<td>" .utf8_decode($pokemon->description) . "</td>";
+        $xlsTbl .= "</tr>";
+        header( "Content-Type: application/vnd.ms-excel; charset=UTF-8" );
+        header("Content-Disposition: attachment; filename=pokemon-download-" . time() . ".xls");
+        $fichier = "<table>$xlsTbl</table>";
+        return $fichier;
+    }
+
+    public function exportPokemons($pokemons) {
+        $xlsTbl = "<tr><th>Pokemon</th><th>lien image</th><th>description</th></tr>";
+        foreach ($pokemons as $pokemon) {
+            $xlsTbl .= "<tr>";
+            $xlsTbl .= "<td>" .utf8_decode($pokemon->name) . "</td>";
+            $xlsTbl .= "<td>" .utf8_decode($pokemon->picture) . "</td>";
+            $xlsTbl .= "<td>" .utf8_decode($pokemon->description) . "</td>";
+            $xlsTbl .= "</tr>";
+        }
+        header( "Content-Type: application/vnd.ms-excel; charset=UTF-8" );
+        header("Content-Disposition: attachment; filename=pokemon-download-" . time() . ".xls");
+        $fichier = "<table>$xlsTbl</table>";
+        return $fichier;
+    }
 }
 
