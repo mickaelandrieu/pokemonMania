@@ -11,10 +11,10 @@ class Pokemons_IndexController extends Zend_Controller_Action
         }
         session_start();
         $test = $this->getRequest()->getParam('value');
-        var_dump($_COOKIE['config'], $test);
+        //var_dump($_COOKIE['config'], $test);
         if(empty($test)) {
           if(empty($_COOKIE["config"])) {
-            $this::ConfigIni();
+            $this::ChangeConfig("ini");
           } else {
             $this::ChangeConfig($_COOKIE["config"]);
           }
@@ -45,7 +45,7 @@ class Pokemons_IndexController extends Zend_Controller_Action
     public function indexAction()
     {   
         $this->debug = $this::GetDebug();
-        if(!empty($_COOKIE)) {
+        if(!empty($_COOKIE['config'])) {
           if($_COOKIE['config'] == 'yaml') {
             $this::AddFireFoxLog($this->debug);
           }

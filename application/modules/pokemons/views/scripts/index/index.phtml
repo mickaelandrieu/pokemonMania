@@ -2,9 +2,17 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>pokemonMania : un site trop cool !</title>
+    <title>Titre de ma page</title>
     <link rel="stylesheet" href="<?php echo $this->baseUrl('css/bootstrap.min.css') ?>" type="text/css" >
     <link rel="stylesheet" href="<?php echo $this->baseUrl('css/bootstrap-responsive.min.css') ?>" type="text/css" >
+    <script type="text/javascript"> 
+      function Lien() {
+      	i = document.Choix.Liste.selectedIndex;
+      	if (i == 0) return;
+      	url = document.Choix.Liste.options[i].value;
+      	parent.location.href = url;
+      }
+    </script> 
 </head>
 <body>
 <section>
@@ -14,10 +22,20 @@
             <ul>
                 <li>
                     <a href="<?php echo $this->baseUrl('/pokemons/') ?>">Pokemons</a>
-                    <a href="<?php echo $this->baseUrl('/pokemons/contact') ?>">Contact Us !</a>
+                    <a href="<?php echo $this->baseUrl('/pokemons/') ?>">Contact Us !</a>
                 </li>
             </ul>
         </nav>
+          <FORM NAME="Choix">
+          <SELECT NAME="Liste" onChange="Lien()">
+          <OPTION VALUE="<?php echo $this->baseUrl('/pokemons/') ?>">
+          <OPTION VALUE="<?php echo $this->baseUrl('/pokemons/index/config/value/ini') ?>">Ini
+          <OPTION VALUE="<?php echo $this->baseUrl('/pokemons/index/config/value/php') ?>">Php
+          <OPTION VALUE="<?php echo $this->baseUrl('/pokemons/index/config/value/xml') ?>">Xml
+          <OPTION VALUE="<?php echo $this->baseUrl('/pokemons/index/config/value/json') ?>">Json
+          <OPTION VALUE="<?php echo $this->baseUrl('/pokemons/index/config/value/yaml') ?>">Yaml
+          </SELECT>
+          </FORM>
     </header>
     <section>
         <h2>Pokemons</h2>
@@ -55,6 +73,9 @@
 
     </section>
 </section>
+<div id="pied" style="position: fixed; bottom: 0; left: 0; width: 100%; text-align: center;">
+  <?php echo $this->debug; ?>
+</div>
 <script type="javascript" src="<?php echo $this->baseUrl('js/jquery-1.7.1.min.js') ?>"></script>
 <script type="javascript" src="<?php echo $this->baseUrl('js/bootstrap.min.js') ?>"></script>
 </body>
