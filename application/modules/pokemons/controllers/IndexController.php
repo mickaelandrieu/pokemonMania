@@ -45,8 +45,8 @@ class Pokemons_IndexController extends Zend_Controller_Action
     public function indexAction()
     {   
         $this->debug = $this::GetDebug();
-        if(!empty($_COOKIE['config'])) {
-          if($_SESSION['config'] == 'yaml') {
+        if(!empty($_SESSION['config'])) {
+            if($_SESSION['config'] == 'yaml') {
             $this::AddFireFoxLog($this->debug);
           }
           if($_SESSION['config'] == 'xml') {
@@ -299,7 +299,7 @@ class Pokemons_IndexController extends Zend_Controller_Action
         $columnMapping = array("lvl" => "priority", "msg" => "message");
 
         $writer = new Zend_Log_Writer_Db($db, 'zf_special_log', $columnMapping);
-         
+
         $logger = new Zend_Log($writer);
          
         $logger->debug($log); 
@@ -388,11 +388,11 @@ class Pokemons_IndexController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender(true);        
         if ($id) {
             $pokemon = $this->pokemons->find($id)->current();
-            $xlsTbl = $this::exportPokemon($pokemon);
+            $xlsTbl = $this->exportPokemon($pokemon);
         }
         else{
             $pokemons = $this->pokemons->fetchAll();
-            $xlsTbl = $this::exportPokemons($pokemons);
+            $xlsTbl = $this->exportPokemons($pokemons);
         }
         echo $xlsTbl;
     }
