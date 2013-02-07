@@ -11,7 +11,7 @@ class Pokemons_IndexController extends Zend_Controller_Action
         }
         session_start();
         $test = $this->getRequest()->getParam('value');
-        //var_dump($_SESSION['config'], $test);
+
         if(empty($test)) {
           if(empty($_SESSION["config"])) {
             $this::ChangeConfig("ini");
@@ -84,6 +84,8 @@ class Pokemons_IndexController extends Zend_Controller_Action
         if ($id > 0)
         {
             $pokemon = $this->pokemons->find($id)->current();
+            $this::logPokemon($pokemon);
+
             $this->view->pokemon = $pokemon;
         }
         else $this->view->message = 'This Pokemon was not discovered yet !';
@@ -153,12 +155,18 @@ class Pokemons_IndexController extends Zend_Controller_Action
             ->setRequired(false)
             ->setDescription('Description du pokemon');
 
+        $criticite = new Zend_Form_Element_Select('criticite');
+        $criticite->setLabel('Criticité')
+                  ->setRequired(true)
+                  ->addMultiOptions(array(0 => 0, 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7))
+                  ->setDescription('Utile pour le log');
+
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Valider le formulaire')
             ->setIgnore(true);
 
         $form = new Zend_Form();
-        $form->addElements(array($name, $picture, $description, $submit));
+        $form->addElements(array($name, $picture, $description, $criticite, $submit));
         return $form; // return the form
     }
 
@@ -415,5 +423,41 @@ class Pokemons_IndexController extends Zend_Controller_Action
         header("Content-Disposition: attachment; filename=pokemon-download-" . time() . ".xls");
         $fichier = "<table>$xlsTbl</table>";
         return $fichier;
+    }
+
+    private function logPokemon($pokemon) {
+        $writer = new Zend_Log_Writer_Stream('php://output');
+        $logger = new Zend_Log($writer);
+
+        $criticite = $pokemon->criticite;
+        $info = $pokemon->name ." avec l'id ".$pokemon->id;
+        switch($criticite) {
+            case 0:
+                $logger->log($info, Zend_Log::EMERG);
+                break;
+            case 1:
+                $logger->log($info, Zend_Log::ALERT);
+                break;
+            case 2:
+                $logger->log($info, Zend_Log::CRIT);
+                break;
+            case 3:
+                $logger->log($info, Zend_Log::ERR);
+                break;
+            case 4:
+                $logger->log($info, Zend_Log::WARN);
+                break;
+            case 5:
+                $logger->log($info, Zend_Log::NOTICE);
+                break;
+            case 6:
+                $logger->log($info, Zend_Log::INFO);
+                break;
+            case 7:
+                $logger->log($info, Zend_Log::DEBUG);
+                break;
+            default:
+                $logger->log($info, Zend_Log::EMERG);
+        }
     }
 }

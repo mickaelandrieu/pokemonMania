@@ -970,3 +970,63 @@
   'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
   'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
 </pre></pre>
+2013-02-07T00:57:15+00:00 DEBUG (7): <pre><pre class='xdebug-var-dump' dir='ltr'>
+<b>array</b>
+  'module' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'pokemons'</font> <i>(length=8)</i>
+  'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+  'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+</pre></pre>
+2013-02-07T00:57:51+00:00 DEBUG (7): <pre><pre class='xdebug-var-dump' dir='ltr'>
+<b>array</b>
+  'module' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'pokemons'</font> <i>(length=8)</i>
+  'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+  'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+</pre></pre>
+2013-02-07T00:57:58+00:00 DEBUG (7): <pre><pre class='xdebug-var-dump' dir='ltr'>
+<b>array</b>
+  'module' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'pokemons'</font> <i>(length=8)</i>
+  'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+  'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+</pre></pre>
+2013-02-07T00:58:03+00:00 DEBUG (7): <pre><pre class='xdebug-var-dump' dir='ltr'>
+<b>array</b>
+  'module' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'pokemons'</font> <i>(length=8)</i>
+  'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+  'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+</pre></pre>
+2013-02-07T00:58:10+00:00 DEBUG (7): <pre><pre class='xdebug-var-dump' dir='ltr'>
+<b>array</b>
+  'module' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'pokemons'</font> <i>(length=8)</i>
+  'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+  'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+</pre></pre>
+2013-02-07T11:33:01+00:00 DEBUG (7): <pre><pre class='xdebug-var-dump' dir='ltr'>
+<b>array</b>
+  'module' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'pokemons'</font> <i>(length=8)</i>
+  'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+  'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+</pre></pre>
+2013-02-07T11:42:50+00:00 DEBUG (7): <pre><pre class='xdebug-var-dump' dir='ltr'>
+<b>array</b>
+  'module' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'pokemons'</font> <i>(length=8)</i>
+  'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+  'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+</pre></pre>
+2013-02-07T11:52:41+00:00 DEBUG (7): <pre><pre class='xdebug-var-dump' dir='ltr'>
+<b>array</b>
+  'module' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'pokemons'</font> <i>(length=8)</i>
+  'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+  'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+</pre></pre>
+2013-02-07T11:55:58+00:00 DEBUG (7): <pre><pre class='xdebug-var-dump' dir='ltr'>
+<b>array</b>
+  'module' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'pokemons'</font> <i>(length=8)</i>
+  'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+  'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+</pre></pre>
+2013-02-07T11:56:04+00:00 DEBUG (7): <pre><pre class='xdebug-var-dump' dir='ltr'>
+<b>array</b>
+  'module' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'pokemons'</font> <i>(length=8)</i>
+  'controller' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+  'action' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'index'</font> <i>(length=5)</i>
+</pre></pre>
