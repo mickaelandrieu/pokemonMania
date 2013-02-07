@@ -11,17 +11,17 @@ class Pokemons_IndexController extends Zend_Controller_Action
         }
         session_start();
         $test = $this->getRequest()->getParam('value');
-        //var_dump($_COOKIE['config'], $test);
+        //var_dump($_SESSION['config'], $test);
         if(empty($test)) {
-          if(empty($_COOKIE["config"])) {
+          if(empty($_SESSION["config"])) {
             $this::ChangeConfig("ini");
           } else {
-            $this::ChangeConfig($_COOKIE["config"]);
+            $this::ChangeConfig($_SESSION["config"]);
           }
         } else {
            $this::ChangeConfig($test);
         }
-        if($_COOKIE["config"] != "php") {
+        if($_SESSION["config"] != "php") {
           $adapter = Zend_Db::factory($this->config->database->adapter, array(
               'host' => $this->config->database->params->host,
               'username' => $this->config->database->params->username,
@@ -46,10 +46,10 @@ class Pokemons_IndexController extends Zend_Controller_Action
     {   
         $this->debug = $this::GetDebug();
         if(!empty($_COOKIE['config'])) {
-          if($_COOKIE['config'] == 'yaml') {
+          if($_SESSION['config'] == 'yaml') {
             $this::AddFireFoxLog($this->debug);
           }
-          if($_COOKIE['config'] == 'xml') {
+          if($_SESSION['config'] == 'xml') {
             $this::AddDBLog($this->debug);
           }
         }
@@ -282,13 +282,14 @@ class Pokemons_IndexController extends Zend_Controller_Action
     }
     
     private function AddDBLog($log) {
-        $params = array ($this->config->database->params->host,
-                         $this->config->database->params->username,
-                         $this->config->database->params->password,
-                         $this->config->database->params->dbname);
-        $db = Zend_Db::factory($this->config->database->params->adapter, $params);
-         
-        $columnMapping = array('lvl' => 'DEBUG', 'msg' => $log);
+        $params = array ('host' => $this->config->database->params->host,
+                         'username' => $this->config->database->params->username,
+                         'password' => $this->config->database->params->password,
+                         'dbname' => $this->config->database->params->dbname);
+        $db = Zend_Db::factory($this->config->database->adapter, $params);
+
+        $columnMapping = array("lvl" => "priority", "msg" => "message");
+
         $writer = new Zend_Log_Writer_Db($db, 'zf_special_log', $columnMapping);
          
         $logger = new Zend_Log($writer);
@@ -350,7 +351,7 @@ class Pokemons_IndexController extends Zend_Controller_Action
             $this::ConfigIni();
             break;                    
         }    
-        setcookie("config", $value, time()+3600);
+        $_SESSION["config"] = $value;
     }
     
     private function ConfigPhp() {
